@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#08090d">
+<title>SPIDER-MAN // RECOVERY PROTOCOL</title>
+<style>
+:root{--bg:#07080c;--panel:#0d1017;--red:#ef233c;--blue:#1683ff;--cyan:#61d8ff;--text:#f5f7fb;--muted:#8e99aa;--green:#57f287;--yellow:#ffd166;--border:rgba(255,255,255,.10)}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 20% 10%,rgba(239,35,60,.18),transparent 28%),radial-gradient(circle at 85% 80%,rgba(22,131,255,.14),transparent 30%),var(--bg);color:var(--text);font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.08;background-image:linear-gradient(rgba(255,255,255,.15) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.15) 1px,transparent 1px);background-size:38px 38px}
+.web{position:fixed;inset:0;pointer-events:none;opacity:.16}.web:before,.web:after{content:"";position:absolute;width:55vw;height:55vw;border:1px solid rgba(255,255,255,.12);border-radius:50%;left:-18vw;top:-22vw;box-shadow:0 0 0 35px transparent,0 0 0 36px rgba(255,255,255,.07),0 0 0 78px transparent,0 0 0 79px rgba(255,255,255,.06),0 0 0 125px transparent,0 0 0 126px rgba(255,255,255,.05)}.web:after{left:auto;top:auto;right:-22vw;bottom:-26vw}
+.container{width:min(920px,92%);margin:0 auto;padding:28px 0 70px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;border-bottom:1px solid var(--border);padding:10px 0 16px;margin-bottom:24px;font-size:12px;color:var(--muted)}.logo{color:var(--text);font-weight:900;letter-spacing:2px}.status{display:flex;align-items:center;gap:7px}.dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}
+.panel{background:linear-gradient(145deg,rgba(17,22,32,.94),rgba(8,10,15,.94));border:1px solid var(--border);border-radius:18px;padding:28px;box-shadow:0 20px 70px rgba(0,0,0,.35)}.hidden{display:none!important}.kicker{color:#ff4960;font-size:12px;letter-spacing:2px;font-weight:800}h1{font-size:clamp(30px,7vw,62px);line-height:.98;margin:12px 0 18px;letter-spacing:-3px}h2{font-size:24px;margin:8px 0 12px}p{line-height:1.65;color:#cbd2dd}.muted{color:var(--muted)}.hero{min-height:560px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}.hero .spider{position:absolute;right:6%;top:9%;font-size:150px;opacity:.08;filter:grayscale(1)}
+.code{background:#05070a;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:18px;white-space:pre-wrap;line-height:1.55;color:#b8c1ce;font-size:12px}.accent{color:var(--cyan)}.red{color:#ff4960}.green{color:var(--green)}.yellow{color:var(--yellow)}
+.btn{border:1px solid rgba(255,255,255,.16);background:#141923;color:var(--text);padding:13px 18px;border-radius:10px;cursor:pointer;font:inherit;font-weight:800;transition:.18s;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}.btn:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.35)}.btn.primary{background:var(--red);border-color:var(--red);box-shadow:0 0 25px rgba(239,35,60,.22)}.btn:disabled{opacity:.35;cursor:not-allowed;transform:none}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.progress-wrap{margin-bottom:22px}.progress-line{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:7px}.progress{height:7px;background:#171b24;border-radius:99px;overflow:hidden}.progress>span{display:block;height:100%;background:linear-gradient(90deg,var(--red),var(--blue));width:0%;transition:.4s}
+.options{display:grid;gap:10px;margin-top:20px}.option{text-align:left;width:100%}.feedback{min-height:52px;margin-top:15px;padding:12px;border-radius:10px;background:#0a0d12;color:var(--muted);font-size:13px;line-height:1.5}.feedback.good{border:1px solid rgba(87,242,135,.25);color:#aaffc9}.feedback.bad{border:1px solid rgba(239,35,60,.25);color:#ff9eaa}
+.big-status{border:1px solid rgba(87,242,135,.25);background:rgba(87,242,135,.05);border-radius:14px;padding:22px;margin-top:20px}.input{width:100%;padding:14px 15px;border-radius:10px;border:1px solid var(--border);background:#080a0f;color:var(--text);font:inherit;outline:none;margin-top:18px}.input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(22,131,255,.12)}
+.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:20px}.choice{padding:16px;border-radius:12px;border:1px solid var(--border);background:#0b0f16;cursor:pointer;text-align:center;font:inherit;color:var(--text);min-height:74px}.choice:hover{border-color:rgba(255,255,255,.35);transform:translateY(-1px)}.choice.selected{border-color:var(--blue);background:rgba(22,131,255,.12)}
+.lock{font-size:70px;text-align:center;margin:10px 0 20px;animation:pulse 2s infinite}@keyframes pulse{50%{transform:scale(1.05);opacity:.8}}.shake{animation:shake .28s linear}@keyframes shake{25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-4px)}}footer{text-align:center;color:#596272;font-size:11px;padding:24px 0}.small-note{font-size:11px;color:#667083}
+@media(max-width:650px){.panel{padding:20px}.choice-grid{grid-template-columns:1fr}.hero{min-height:520px}.topbar{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="web"></div>
+<div class="container">
+<div class="topbar"><div class="logo">SPIDER-MAN // RECOVERY PROTOCOL</div><div class="status"><span class="dot"></span>SYSTEM ONLINE</div></div>
+<main id="app">
+
+<section id="screen-start" class="panel hero">
+<div class="spider">🕷️</div>
+<div class="kicker">⚠️ CLASSIFIED FILE // 0908</div>
+<h1>OBJETO<br><span class="red">CONFISCADO.</span></h1>
+<p>Um item pertencente ao agente Daniel foi apreendido pelo sistema. A localização não será revelada até que sua identidade seja validada.</p>
+<div class="code">STATUS: <span class="red">LOCKED</span><br>AGENT: DANIEL<br>OBJECT: <span class="accent">UNKNOWN</span><br>THREAT LEVEL: <span class="yellow">NERD</span><br>ESTIMATED TIME: ~10 MIN</div>
+<div class="actions"><button class="btn primary" onclick="startGame()">[ INICIAR MISSÃO ]</button><button class="btn" onclick="playMusic()">♪ TEIA // REFERÊNCIA</button></div>
+<p class="small-note">Dica: curiosidade não é opcional nesta operação.</p>
+</section>
+
+<section id="screen-music" class="panel hidden">
+<div class="kicker">AUDIO TRACE DETECTED</div><h2>Uma pista do primeiro encontro.</h2>
+<p>Existe uma música associada a uma certa primeira viagem de carro. Você provavelmente vai reconhecer o nome.</p>
+<div class="big-status"><div class="kicker">JORGE VERCILLO</div><h2>Homem-Aranha</h2><p class="accent">“Você na minha teia.”</p><p class="small-note">O navegador pode bloquear reprodução automática. Use o botão abaixo para abrir a faixa no YouTube oficial.</p>
+<div class="actions"><a class="btn primary" href="https://www.youtube.com/watch?v=ttbi_BMByOk" target="_blank" rel="noopener">▶ OUVIR A MÚSICA</a><button class="btn" onclick="backFromMusic()">← VOLTAR À MISSÃO</button></div></div>
+</section>
+
+<section id="screen-game" class="panel hidden">
+<div class="progress-wrap"><div class="progress-line"><span id="stage-label">FASE 01 / 05</span><span id="score-label">SCORE: 0</span></div><div class="progress"><span id="progress-bar"></span></div></div>
+<div id="game-content"></div>
+</section>
+
+<section id="screen-final" class="panel hidden">
+<div class="lock">🔓</div><div class="kicker">RECOVERY PROTOCOL COMPLETE</div><h1>ACESSO<br><span class="green">AUTORIZADO.</span></h1>
+<div class="code">AGENT: DANIEL<br>IDENTITY: <span class="green">VERIFIED ✓</span><br>PUZZLE SKILL: <span class="green">ACCEPTABLE</span><br>CURIOSITY: <span class="red">DANGEROUS</span><br>OBJECT STATUS: <span class="green">UNLOCKED</span></div>
+<div class="big-status"><h2>Você recuperou o objeto.</h2><p>Agora procure a agente Kelly para receber fisicamente aquilo que o sistema acabou de liberar. 🕷️</p></div>
+<div class="big-status"><div class="kicker">MISSÃO SECUNDÁRIA DISPONÍVEL</div><h2>PROJETO: HOMEM-ARANHA</h2><p>Foi detectada uma oportunidade cinematográfica de baixo custo e alto potencial de diversão.</p><p class="accent"><strong>Semana do Cinema // R$ 10–12</strong></p><p>Agente Kelly solicita sua presença.</p><button class="btn primary" onclick="acceptCinema()">[ ACEITAR MISSÃO ]</button><div id="cinema-result" class="feedback hidden"></div></div>
+<div class="code" style="margin-top:18px"><span class="yellow">// EASTER EGG // CURIOUS AGENT</span>
+
+/*
+Se você chegou até aqui...
+
+Parabéns, curioso.
+
+Eu sabia que você ia olhar o código. 😂
+
+Não existe nenhuma pista aqui.
+
+Ou existe?
+*/</div>
+</section>
+</main>
+<footer>SPIDER-MAN // RECOVERY PROTOCOL · made with curiosity, code &amp; a certain Kelly 🕷️</footer>
+</div>
+
+<script>
+const state={stage:0,score:0};
+const stages=[
+{title:"FASE 01 — IDENTIFICAÇÃO",question:"Quem é o agente que está tentando recuperar o objeto confiscado?",options:["Peter Parker","Daniel","Tony Stark","O vizinho do prédio"],correct:1,good:"✓ IDENTIDADE CONFIRMADA. O sistema reconhece o usuário.",bad:"✗ Sério? Você está tentando recuperar um presente seu e errou o próprio nome. 😂"},
+{title:"FASE 02 — ORIGEM DA OPERAÇÃO",question:"Em qual data começou oficialmente esta operação?",options:["11/07/2026","18/07/2026","31/07/2026","01/08/2026"],correct:0,good:"✓ MATCH CONFIRMADO. 11/07/2026 foi o primeiro contato no Tinder.",bad:"✗ Quase. O sistema possui memória melhor que você. 😂"},
+{title:"FASE 03 — SENTIDO-ARANHA",question:"Qual destas combinações é a mais suspeitamente Daniel?",options:["TI + anime + Spider-Man","Piano + crochê + jardinagem","Ópera + xadrez + balé","Surf + culinária francesa + tricô"],correct:0,good:"✓ PADRÃO DETECTADO. Nerd confirmado.",bad:"✗ O sentido-aranha não detectou vida suficiente nessa resposta."},
+{title:"FASE 04 — MEMÓRIA DE CAMPO",question:"Qual música apareceu em uma certa primeira viagem de carro?",options:["Homem-Aranha — Jorge Vercillo","Tempo Perdido — Legião Urbana","Anna Júlia — Los Hermanos","Evidências — Chitãozinho & Xororó"],correct:0,good:"✓ AUDIO TRACE CONFIRMADO. Essa memória é oficialmente canônica.",bad:"✗ Não. E essa pergunta tinha uma pista bem específica. 🕷️"}
+];
+
+function hideAll(){document.querySelectorAll("main>section").forEach(s=>s.classList.add("hidden"))}
+function show(id){hideAll();document.getElementById(id).classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"})}
+function startGame(){state.stage=0;state.score=0;show("screen-game");renderStage()}
+function renderStage(){
+document.getElementById("stage-label").textContent=`FASE ${String(Math.min(state.stage+1,5)).padStart(2,"0")} / 05`;
+document.getElementById("score-label").textContent=`SCORE: ${state.score}`;
+document.getElementById("progress-bar").style.width=`${(state.stage/5)*100}%`;
+if(state.stage<stages.length){
+const s=stages[state.stage];
+document.getElementById("game-content").innerHTML=`<div class="kicker">${s.title}</div><h2>${s.question}</h2><div class="options">${s.options.map((o,i)=>`<button class="btn option" onclick="answer(${i})">${String.fromCharCode(65+i)}) ${o}</button>`).join("")}</div><div id="feedback" class="feedback">Selecione uma resposta. O sistema está observando.</div>`;
+}else if(state.stage===4){renderPattern()}else{renderFinalPuzzle()}
+}
+function answer(i){
+const s=stages[state.stage],fb=document.getElementById("feedback");
+document.querySelectorAll(".option").forEach(b=>b.disabled=true);
+if(i===s.correct){state.score+=10;fb.className="feedback good";fb.textContent=s.good}else{fb.className="feedback bad";fb.textContent=s.bad;document.getElementById("game-content").classList.add("shake");setTimeout(()=>document.getElementById("game-content").classList.remove("shake"),300)}
+document.getElementById("score-label").textContent=`SCORE: ${state.score}`;
+const btn=document.createElement("button");btn.className="btn primary";btn.style.marginTop="14px";btn.textContent="[ PRÓXIMA FASE ]";btn.onclick=()=>{state.stage++;renderStage()};document.getElementById("game-content").appendChild(btn);
+}
+function renderPattern(){
+document.getElementById("stage-label").textContent="FASE 05 / 05";document.getElementById("progress-bar").style.width="80%";
+document.getElementById("game-content").innerHTML=`<div class="kicker">FASE 05 — ANOMALIA DETECTADA</div><h2>Um objeto não pertence ao conjunto.</h2><p>Seu sentido-aranha precisa identificar a anomalia. Só existe uma resposta.</p><div class="choice-grid">
+<button class="choice" onclick="patternChoice(this,false)">🕷️ Spider-Man</button><button class="choice" onclick="patternChoice(this,false)">💻 TI</button><button class="choice" onclick="patternChoice(this,true)">🥦 Brócolis</button><button class="choice" onclick="patternChoice(this,false)">🎮 Games</button><button class="choice" onclick="patternChoice(this,false)">🍿 Cinema</button><button class="choice" onclick="patternChoice(this,false)">🧩 Puzzle</button></div><div id="pattern-feedback" class="feedback">Clique na anomalia.</div>`;
+}
+function patternChoice(el,correct){
+const fb=document.getElementById("pattern-feedback");
+if(correct){state.score+=10;el.classList.add("selected");fb.className="feedback good";fb.textContent="✓ ANOMALIA LOCALIZADA. Por algum motivo, você colocou brócolis no meio de um relatório sobre o Daniel. 😂";setTimeout(()=>{state.stage=5;renderFinalPuzzle()},700)}
+else{fb.className="feedback bad";fb.textContent="✗ Nada disso. Pense no que NÃO combina com o arquivo Daniel.";el.classList.add("shake");setTimeout(()=>el.classList.remove("shake"),300)}
+document.getElementById("score-label").textContent=`SCORE: ${state.score}`;
+}
+function renderFinalPuzzle(){
+document.getElementById("stage-label").textContent="PROTOCOLO FINAL";document.getElementById("progress-bar").style.width="95%";
+document.getElementById("game-content").innerHTML=`<div class="kicker">🔐 RECOVERY KEY REQUIRED</div><h2>Última etapa.</h2><p>O sistema aceita uma palavra-chave. A pista é uma referência muito específica à nossa história.</p><div class="code">PISTA 01: não é "Peter".<br>PISTA 02: não é "Parker".<br>PISTA 03: você ouviu essa palavra durante uma certa história de Homem-Aranha.<br>PISTA 04: ela tem relação com o que aconteceu quando duas pessoas começaram a se conhecer.</div><input id="final-input" class="input" placeholder="Digite a palavra-chave..." autocomplete="off"><div class="actions"><button class="btn primary" onclick="checkFinal()">[ DESBLOQUEAR ]</button><button class="btn" onclick="musicHint()">♪ PEDIR PISTA MUSICAL</button></div><div id="final-feedback" class="feedback">O sistema está esperando...</div>`;
+setTimeout(()=>document.getElementById("final-input").focus(),100);
+}
+function checkFinal(){
+const val=document.getElementById("final-input").value.trim().toLowerCase(),fb=document.getElementById("final-feedback");
+if(["teia","homem-aranha","homem aranha","aranha"].includes(val)){state.score+=20;fb.className="feedback good";fb.textContent="✓ CHAVE ACEITA. RECOVERY PROTOCOL COMPLETE.";setTimeout(()=>show("screen-final"),800)}
+else{fb.className="feedback bad";fb.textContent="✗ Chave recusada. Dica: pense na música que tocou naquela primeira saída..."}
+}
+function musicHint(){alert("Pista musical: Jorge Vercillo. Homem-Aranha. 🕷️")}
+function playMusic(){show("screen-music")}
+function backFromMusic(){show("screen-start")}
+function acceptCinema(){const b=document.getElementById("cinema-result");b.className="feedback good";b.classList.remove("hidden");b.textContent="✓ MISSÃO ACEITA. Agente Kelly foi notificada. Agora só falta escolher a sessão. 🕷️❤️"}
+</script>
+</body>
+</html>
